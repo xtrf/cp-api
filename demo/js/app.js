@@ -150,18 +150,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       }
 
     });
-    /*angularjs version */
-    /*  $http({method: 'GET', url: $scope.apiURL+'system/values/languages', withCredentials: true, dataType: 'json'}).
-     success(function(data) {
-     deferredLanguages.resolve();
-     console.log('success')
-     console.log(data);
-     $scope.languages = data;
-     }).
-     error(function(data) {
-     console.log('fail');
-     console.log(data);
-     });*/
   }
 
   var loadWorkflows = function() {
@@ -230,7 +218,19 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
     var getRandomInt = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1)) + min;
     }
-    var uniqueProjectNumber = getRandomInt(1,100000);
+
+    var getRandomLetters = function(idLength)
+    {
+      var text = "";
+      var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+      for( var i=0; i < idLength; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
+    }
+
+    var uniqueProjectNumber = 'P_'+getRandomInt(1,10000000)+getRandomLetters(1);
 
 
     var sampleJSON = {
@@ -302,12 +302,20 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   }
 
   $scope.getProject = function(projectCustomerID){
+    $scope.projectNotFound = false;
     $.ajax({
       url: $scope.apiURL+'projects?customerProjectNumber='+projectCustomerID,
       dataType: 'json',
       xhrFields: { withCredentials: true},
       success: function(data){
-        $scope.projectData = data[0];
+        console.log(data.length);
+        if(data.length === 0){
+          $scope.projectNotFound = true;
+          $scope.projectData = null;
+          $scope.filesData = null;
+        }else {
+          $scope.projectData = data[0];
+        }
         $scope.$apply();
       },
       error:function(data){
