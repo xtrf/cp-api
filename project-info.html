@@ -69,6 +69,9 @@
                                     <input type="text" class="form-control" placeholder="Enter Project ID" ng-model="projectID">
                                 </div>
                                 <button type="submit" class="btn btn-default" ng-click="getProject(projectID)">Get Project</button>
+                                <div ng-show="projectNotFound === true" class="alert-danger" style="margin-top:30px; padding:5px;">
+                                    There is no project with given ID.
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <p>GET: <em>{{apiURL}}projects?customerProjectNumber={{projectID}}</em></p>
@@ -88,6 +91,7 @@
                                 <div ng-repeat="taskFiles in filesData.tasksFiles">
                                     <h4>Task: {{taskFiles.idNumber}}</h4>
                                     <h5>Output files:</h5>
+                                    <span ng-show="taskFiles.output.files == null || taskFiles.output.files.length === 0"><em>No output files</em></span>
                                     <ul>
                                         <li ng-repeat="file in taskFiles.output.files"><a href="{{apiURL}}projects/files/{{file.id}}">{{file.name}}</a></li>
                                     </ul>
