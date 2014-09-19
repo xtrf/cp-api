@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Api Integration</title>
+    <script src="js/angular.min.js"></script>
+    <script src="js/cookies.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <script src="js/run_prettify.js"></script>
+</head>
+
+<body ng-app="apiIntegration" ng-controller="mainController">
+
+
+    <div>
+        <div class="row" style="width:100%">
+            <div class="col-md-8">
+
+                <div class="container">
+                    <h2>1. Log in + obtaining session <button class="btn btn-info btn-xs"  onclick="showSnippet('#code-snippet-1');">code snippet</button></h2>
+
+                    <div class="row">
+                        <div class="col-md-6" style="height: 450px; overflow: auto;">
+                            <div class="form-group">
+                                <label>API URL</label>
+                                <input type="text" class="form-control" placeholder="Enter API URL" ng-model="apiURL">
+                            </div>
+                            <div class="form-group">
+                                <label>Login</label>
+                                <input type="text" class="form-control"  placeholder="Enter login" ng-model="userLogin">
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="text" class="form-control"  placeholder="Enter password" ng-model="userPassword">
+                            </div>
+                            <button type="submit" class="btn btn-default" ng-click="logIn()">Submit</button>
+                            <div ng-show="originProblem == true" class="alert-danger" style="margin-top:30px; padding:5px;">
+                                Can't login because of cross-domain problems. Please try to: <button class="btn btn-default btn-sm" ng-click="logOut()" ng-disabled="loggedOut == true">Reset session</button> and try again.<br/>
+                                If it doesn't help please try to visit this address: <em><a href="{{apiURL}}system/logout" target="_blank">{{apiURL}}system/logout</a></em> and try again.<br/>
+                                If problem persists please:<br/>
+                                <ul>
+                                    <li>in Chrome: run browser with <em>--disable-web-security</em> flag.</li>
+                                    <li>in Firefox enter <em>about:config</em> in address bar then set <em>security.fileuri.strict_origin_policy</em> to <strong>false</strong></li>
+                                </ul>
+                            </div>
+
+                            <div ng-show="loginFailed == true" class="alert-danger" style="margin-top:30px; padding: 5px;">
+                                The login information you have entered is incorrect!
+                            </div>
+
+                        </div>
+                        <div class="col-md-6" style="height: 450px; overflow: auto;">
+                            <p>POST: <em>{{apiURL}}system/login</em></p>
+                            <p>jsessionid: <strong>{{jsessionid}}</strong></p>
+                            <p>GET: <em>{{apiURL}}system/session</em></p>
+                    <pre style="height: 300px; overflow: auto;">
+                    {{session | json}}
+                    </pre>
+                            <p>Customer ID: <strong>{{customerID}}</strong></p>
+                        </div>
+
+                        <h2>2. Getting project info <button class="btn btn-info btn-xs"  onclick="showSnippet('#code-snippet-5');">code snippet</button></h2>
+                        <div class="row"  ng-show="session">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Project ID</label>
+                                    <input type="text" class="form-control" placeholder="Enter Project ID" ng-model="projectID">
+                                </div>
+                                <button type="submit" class="btn btn-default" ng-click="getProject(projectID)">Get Project</button>
+                            </div>
+                            <div class="col-md-6">
+                                <p>GET: <em>{{apiURL}}projects?customerProjectNumber={{projectID}}</em></p>
+                        <pre style="height: 300px; overflow: auto;">
+                            {{projectData | json}}
+                        </pre>
+                                <p>Project Internal ID: <strong>{{projectData.id}}</strong></p>
+                            </div>
+                        </div>
+                        <h2>3. Get Files <button class="btn btn-info btn-xs" onclick="showSnippet('#code-snippet-6');">code snippet</button></h2>
+                        <div class="row" ng-show="projectData">
+                            <div class="col-md-6">
+                                <button class="btn btn-default" ng-click="getFiles(projectData.id)">Get Files</button>
+                            </div>
+                            <div class="col-md-6">
+                                <p>GET: <em>{{apiURL}}projects/{internalID}/files</em></p>
+                                <div ng-repeat="taskFiles in filesData.tasksFiles">
+                                    <h4>Task: {{taskFiles.idNumber}}</h4>
+                                    <h5>Output files:</h5>
+                                    <ul>
+                                        <li ng-repeat="file in taskFiles.output.files"><a href="{{apiURL}}projects/files/{{file.id}}">{{file.name}}</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style="margin-bottom: 300px;"></div>
+
+            </div>
+            <div class="col-md-4" style="position: relative;">
+                <pre class="hide bg-warning prettyprint" id="code-snippet-1" ng-include="'code-snippets/code-snippet-1.js'"  style="position: absolute; top:0; right: 0; width:100%;"></pre>
+                <pre class="hide bg-warning prettyprint" id="code-snippet-5" ng-include="'code-snippets/code-snippet-5.js'"  style="position: absolute; top:650px; right: 0; width:100%;"></pre>
+                <pre class="hide bg-warning prettyprint" id="code-snippet-6" ng-include="'code-snippets/code-snippet-6.js'"  style="position: absolute; top:950px; right: 0; width:100%;"></pre>
+            </div>
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
