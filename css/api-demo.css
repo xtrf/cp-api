@@ -1,0 +1,80 @@
+pre {
+    margin: 0;
+}
+
+.login-alert{
+    margin-top:30px; padding:5px; font-size:13px;
+}
+
+.login-columns {
+    height: 450px;
+    overflow: auto;
+}
+
+.checkmark:before {
+    content:"\2713\0020";
+    color: #009926;
+}
+h3{
+    font-weight: bold;
+}
+
+.sub-row{
+    margin-top:10px;
+    margin-bottom: 30px;
+}
+
+
+.spinner {
+    height:16px;
+    width:16px;
+    display: inline-block;
+    -webkit-animation: rotation .8s infinite linear;
+    -moz-animation: rotation .8s infinite linear;
+    -o-animation: rotation .8s infinite linear;
+    animation: rotation .8s infinite linear;
+    border-left:2px solid rgba(255,255,255,.15);
+    border-right:2px solid rgba(255,255,255,.15);
+    border-bottom:2px solid rgba(255,255,255,.15);
+    border-top:2px solid rgba(255,255,255,.8);
+    border-radius:100%;
+    margin-left: 6px;
+    display: block;
+    float:right;
+    margin-top:2px;
+}
+
+@-webkit-keyframes rotation {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(359deg);}
+}
+
+@-moz-keyframes rotation {
+    from {-moz-transform: rotate(0deg);}
+    to {-moz-transform: rotate(359deg);}
+}
+
+@-o-keyframes rotation {
+    from {-o-transform: rotate(0deg);}
+    to {-o-transform: rotate(359deg);}
+}
+
+@keyframes rotation {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(359deg);}
+}
+
+.popover {
+    max-width: 650px;
+    width: auto;
+}
+
+.main-row{
+    width:100%;
+    margin-top:80px;
+    margin-bottom: 100px;
+}
+
+footer.xa-footer{
+    position: fixed;
+}
