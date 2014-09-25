@@ -47,7 +47,28 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   $scope.sendingQuote = false;
   $scope.originProblem = false;
   $scope.loginFailed = false;
+  $scope.loaders = {
+    isSigningIn: false,
+    isGettingDictionaryValues: false
+  }
+  $scope.sendingQuoteFailed = false;
 
+  $(document).on("click", ".btn-snippet", function () {
+
+    $(this).popover({
+      html : true,
+      content: function() {
+        console.log('test');
+        return '<pre class="prettyprint" style="font-size: 12px; font-weight: normal; width: 600px;">'+$($(this).data('source')).html()+'</pre>'
+      },
+      title: function() {
+        return 'Code snippet'
+      }
+    });
+
+    if($(this).siblings(".popover:visible").length == 0)
+      $(this).popover('toggle');
+  });
 
   var getSession = function(success) {
     var sessionURL = $scope.apiURL + 'system/session.json;jsessionid='+$cookies.jsessionid;
@@ -68,6 +89,7 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   };
 
   $scope.logIn = function() {
+    $scope.loaders.isSigningIn = true;
     $scope.loginFailed = false;
     $scope.originProblem = false;
     $.ajax({
@@ -83,18 +105,14 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
         $cookies.jsessionid = data.jsessionid;
         $scope.jsessionid = data.jsessionid;
         getSession(function(data){
-          console.log('session loaded');
           $scope.session = data;
           deferredSession.resolve();
+          $scope.loaders.isSigningIn = false;
           $scope.$apply();
-
         });
       },
       error: function(XHR, textStatus, errorThrown){
-        console.log(XHR);
-        console.log(textStatus);
-        console.log(errorThrown);
-        console.log(XHR.status);
+        $scope.loaders.isSigningIn = false;
         if(XHR.status == '403' || XHR.status == 0){
           $scope.originProblem = true;
           $scope.$apply();
@@ -103,13 +121,12 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
           $scope.loginFailed = true;
           $scope.$apply();
         }
-
       }
-
     });
   }
 
   $scope.getDictionaryValues = function(){
+    $scope.loaders.isGettingDictionaryValues = true;
     loadLanguages();
     loadWorkflows();
     loadContactPersons();
@@ -126,7 +143,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       dataType: 'json',
       xhrFields: { withCredentials: true},
       success: function(){
-
         console.log('logged out');
       }
     });
@@ -140,8 +156,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       xhrFields: { withCredentials: true},
       success: function(data){
         deferredLanguages.resolve();
-        console.log('success')
-        console.log(data);
         $scope.languages = data;
       },
       error:function(data){
@@ -160,8 +174,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       xhrFields: { withCredentials: true},
       success: function(data){
         deferredWorkflows.resolve();
-        console.log('success')
-        console.log(data);
         $scope.workflows = data;
       },
       error:function(data){
@@ -180,8 +192,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       xhrFields: { withCredentials: true},
       success: function(data){
         deferredSpecializations.resolve();
-        console.log('success')
-        console.log(data);
         $scope.specializations = data;
       },
       error:function(data){
@@ -201,8 +211,6 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       xhrFields: { withCredentials: true},
       success: function(data){
         deferredContactPersons.resolve();
-        console.log('success')
-        console.log(data);
         $scope.contactPersons = data;
       },
       error:function(data){
@@ -250,6 +258,10 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
     return sampleJSON;
   }
 
+  $scope.isFileEntered = function(){
+    return $("#file1").val();
+  }
+
   $scope.uploadFile = function(files) {
     var fd = new FormData();
     fd.append("file", files[0]);
@@ -277,6 +289,7 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   };
 
   $scope.sendQuote = function(){
+    $scope.sendingQuoteFailed = false;
     $scope.sendingQuote = true;;
     var quoteData = angular.fromJson($scope.jsonString);
     $.ajax({
@@ -294,7 +307,9 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
       error:function(data){
         console.log('sending quote failed');
         console.log(data);
+        $scope.sendingQuoteFailed = true;
         $scope.sendingQuote = false;
+        $scope.$apply();
       }
 
     });
@@ -348,6 +363,7 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
    * promises are used to be sure that data are loaded
    * */
   $q.all([deferredContactPersons.promise, deferredLanguages.promise, deferredSpecializations.promise, deferredWorkflows.promise]).then(function(){
+    $scope.loaders.isGettingDictionaryValues = false;
     $scope.dictionariesLoaded = true;
     $scope.jsonString = JSON.stringify(getSampleJSON($scope.languages, $scope.specializations, $scope.workflows, $scope.contactPersons), null,"    ");
   })

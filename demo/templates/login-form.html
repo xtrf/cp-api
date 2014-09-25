@@ -1,0 +1,35 @@
+<h2>1. Log in + obtaining session
+    <i class="checkmark" ng-show="session"></i>
+    <button class="btn btn-default btn-xs btn-snippet" data-source="#code-snippet-1">code snippet</button>
+</h2>
+<div class="row">
+    <div class="col-md-6 login-columns">
+        <div class="form-group">
+            <label>API URL</label>
+            <input type="text" class="form-control" placeholder="Enter API URL" ng-model="apiURL">
+        </div>
+        <div class="form-group">
+            <label>Login</label>
+            <input type="text" class="form-control"  placeholder="Enter login" ng-model="userLogin">
+        </div>
+        <div class="form-group">
+            <label>Password</label>
+            <input type="text" class="form-control"  placeholder="Enter password" ng-model="userPassword">
+        </div>
+        <button type="submit" class="btn btn-primary" ng-click="logIn()">Submit<span class="spinner" ng-show="loaders.isSigningIn"></span></button>
+
+        <div ng-show="originProblem === true" class="alert alert-danger login-alert" ng-include="'templates/login-error-alert.html'"></div>
+
+        <div ng-show="loginFailed === true" class="alert alert-danger login-alert">
+            The login information you have provided is incorrect!
+        </div>
+
+    </div>
+    <div class="col-md-6 login-columns">
+        <p>POST: <em>{{apiURL}}system/login</em></p>
+        <pre>jsessionid: <strong>{{jsessionid}}</strong></pre><br/>
+        <p>GET: <em>{{apiURL}}system/session</em></p>
+        <pre style="height: 280px; overflow: auto;">{{session | json}}</pre><br/>
+        <p ng-show="customerID">Customer ID: <strong>{{customerID}}</strong></p>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+Can't login because of cross-domain problems. Please try to: <button class="btn btn-default btn-xs" ng-click="logOut()" ng-disabled="loggedOut == true">Reset session</button> and try again.<br/>
+If it doesn't help please try to visit this address: <em><a href="{{apiURL}}system/logout" target="_blank">{{apiURL}}system/logout</a></em> and try again.<br/>
+If problem persists please:<br/>
+<ul>
+    <li>in Chrome: run browser with <em>--disable-web-security</em> flag.</li>
+    <li>in Firefox enter <em>about:config</em> in address bar then set <em>security.fileuri.strict_origin_policy</em> to <strong>false</strong></li>
+</ul>
