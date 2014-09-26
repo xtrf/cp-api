@@ -7,7 +7,7 @@ $scope.uploadFile = function(files) {
     data: fd,
     xhrFields: { withCredentials: true},
     processData: false, // Don't process the files
-    contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+    contentType: false, // Set content type to false as jQuery will tell the server it's a query string request
     success: function(data){
       $scope.uploadedFiles.push({filename:data[0].name, id: data[0].id});
       var tmpQuoteJSON = angular.fromJson($scope.jsonString);
