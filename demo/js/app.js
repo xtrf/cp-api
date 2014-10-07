@@ -41,9 +41,9 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   $scope.quoteResponse = null;
   $scope.dictionariesLoaded = false;
   $scope.uploadedFiles = [];
-  $scope.apiURL = 'http://xtrf-trunk1.dev.xtrf.eu/xtrf-api-rest/';
-  $scope.userLogin = "C000001";
-  $scope.userPassword = "Test123!";
+  $scope.apiURL = $cookies.apiURL || 'http://xtrf-trunk1.dev.xtrf.eu/xtrf-api-rest/';
+  $scope.userLogin = $cookies.userLogin || "C000001";
+  $scope.userPassword = $cookies.userPassword || "Test123!";
   $scope.sendingQuote = false;
   $scope.originProblem = false;
   $scope.loginFailed = false;
@@ -53,12 +53,32 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
   }
   $scope.sendingQuoteFailed = false;
 
+  $scope.saveApiURLToLocalStorage = function(apiURL) {
+    $scope.apiURL = apiURL;
+    $cookies.apiURL = apiURL;
+  }
+
+  $scope.saveUserPassword = function(userPassword) {
+    $scope.userPassword = userPassword;
+    $cookies.userPassword = userPassword;
+  }
+
+  $scope.saveUserLogin = function(userLogin) {
+    $scope.userLogin = userLogin;
+    $cookies.userLogin = userLogin;
+  }
+
+  $scope.clearCookies = function () {
+    delete $cookies.userLogin;
+    delete $cookies.apiURL;
+    delete $cookies.userPassword;
+  }
+
   $(document).on("click", ".btn-snippet", function () {
 
     $(this).popover({
       html : true,
       content: function() {
-        console.log('test');
         return '<pre class="prettyprint" style="font-size: 12px; font-weight: normal; width: 600px;">'+$($(this).data('source')).html()+'</pre>'
       },
       title: function() {
@@ -116,8 +136,8 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
         if(XHR.status == '403' || XHR.status == 0){
           $scope.originProblem = true;
           $scope.$apply();
-        };
-        if(XHR.status == 401){
+        }
+        else {
           $scope.loginFailed = true;
           $scope.$apply();
         }
@@ -136,7 +156,7 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
 
   $scope.logOut = function() {
     $scope.loggedOut = true;
-    $cookies.jessionid = null;
+    delete $cookies.jessionid;
     console.log('loggin out...');
     $.ajax({
       url: $scope.apiURL+'system/logout',

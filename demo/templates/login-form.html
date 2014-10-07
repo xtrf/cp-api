@@ -1,20 +1,21 @@
 <h2>1. Log in + obtaining session
     <i class="checkmark" ng-show="session"></i>
     <button class="btn btn-default btn-xs btn-snippet" data-source="#code-snippet-1">code snippet</button>
+    <button class="btn btn-default btn-xs" ng-click="clearCookies()">clear cookies</button>
 </h2>
 <div class="row">
     <div class="col-md-6 login-columns">
         <div class="form-group">
             <label>API URL</label>
-            <input type="text" class="form-control" placeholder="Enter API URL" ng-model="apiURL">
+            <input type="text" class="form-control" placeholder="Enter API URL" ng-model="apiURL" ng-change="saveApiURLToLocalStorage(apiURL)">
         </div>
         <div class="form-group">
             <label>Login</label>
-            <input type="text" class="form-control"  placeholder="Enter login" ng-model="userLogin">
+            <input type="text" class="form-control"  placeholder="Enter login" ng-model="userLogin" ng-change="saveUserLogin(userLogin)">
         </div>
         <div class="form-group">
             <label>Password</label>
-            <input type="text" class="form-control"  placeholder="Enter password" ng-model="userPassword">
+            <input type="text" class="form-control"  placeholder="Enter password" ng-model="userPassword" ng-change="saveUserPassword(userPassword)">
         </div>
         <button type="submit" class="btn btn-primary" ng-click="logIn()">Submit<span class="spinner" ng-show="loaders.isSigningIn"></span></button>
 
