@@ -1,138 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Portal API Integration</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/cookies.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/run_prettify.js"></script>
-    <link rel="stylesheet" href="./css/xtrf-api-landing-page.css">
-    <link rel="stylesheet" href="./css/api-demo.css">
-    <script src="./js/bootstrap.min.js"></script>
+	<title>Customer Portal API Integration</title>
+	<script src="js/angular.min.js"></script>
+	<script src="js/cookies.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="js/run_prettify.js"></script>
+	<link rel="stylesheet" href="./css/xtrf-api-landing-page.css">
+	<link rel="stylesheet" href="./css/api-demo.css">
+	<script src="./js/bootstrap.min.js"></script>
 
 </head>
 
 <body ng-app="apiIntegration" ng-controller="mainController">
-    <div ng-include="'templates/header.html'"></div>
+	<div ng-include="'templates/header.html'"></div>
 
-    <div class="row main-row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
+	<div class="row main-row">
+		<div class="col-md-1"></div>
+		<div class="col-md-10 main-col">
 
-            <div>
-                <div class="alert alert-danger">
-                    <p><strong>WARNING!!!!</strong><br/>To use this example you need to run it in Google Chrome with <em>--disable-web-security</em> flag</p>
-                </div>
-                <div ng-include="'templates/login-form.html'"></div>
-                <h2>
-                    2. Obtaining dictionary values
-                    <i class="checkmark" ng-show="dictionariesLoaded"></i>
-                    <button class="btn btn-default btn-xs btn-snippet" data-source="#code-snippet-2">code snippet</button>
-                </h2>
-                <div class="row" ng-show="session">
-                    <div class="col-md-12">
-                        <button class="btn btn-primary" ng-click="getDictionaryValues()">Get dictionary values<span class="spinner" ng-show="loaders.isGettingDictionaryValues"></span></button>
-                    </div>
-                </div>
-                <div class="row" style="margin-top:10px;" ng-show="session">
-                    <div class="col-md-6" >
-                        <p>GET: <em>{{apiURL}}system/languages</em></p>
-                        <pre style="height: 300px; overflow: auto;">{{languages | json}}</pre>
-                    </div>
-                    <div class="col-md-6" >
-                        <p>GET: <em>{{apiURL}}system/workflows</em></p>
-                        <pre style="height: 300px; overflow: auto;">{{workflows | json}}</pre>
-                    </div>
-                </div>
-                <div class="row" style="margin-top:10px;" ng-show="session">
-                    <div class="col-md-6" >
-                        <p>GET: <em>{{apiURL}}customers/{customerID}/persons</em></p>
-                        <pre style="height: 300px; overflow: auto;">{{contactPersons | json}}</pre>
-                    </div>
-                    <div class="col-md-6" >
-                        <p>GET: <em>{{apiURL}}system/specializations</em></p>
-                        <pre style="height: 300px; overflow: auto;">{{specializations | json}}</pre>
-                    </div>
-                </div>
-                <h2>3. Sending quote/project
-                    <i class="checkmark" ng-show="quoteResponse"></i>
-                </h2>
-                <div style="margin-left: 10px;">
-                    <h3>3a. Uploading files
-                        <button class="btn btn-default btn-xs btn-snippet" data-source="#code-snippet-3">code snippet</button>
-                    </h3>
-                    <div class="row sub-row" ng-show="dictionariesLoaded">
-                        <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label>Choose file</label>
-                                        <input type="file" name="file" id="file-upload"/>
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Upload</label>
-                                        <button class="btn btn-primary" ng-disabled="document.querySelector('#file-upload').files.length == 0" onclick="angular.element(document.querySelector('#file-upload')).scope().uploadFile(document.querySelector('#file-upload').files)">Upload file</button>
-                                    </div>
+			<div>
+				<div class="alert alert-danger">
+					<p><strong>WARNING!!!!</strong><br/>To use this example you need to run it in Google Chrome with <em>--disable-web-security</em>
+						flag</p>
+				</div>
+				<h1>Demo - Create Project</h1>
+				<hr/>
+				<div ng-include="'templates/login-form.html'"></div>
+				<hr/>
+				<h2>
+					2. Obtaining dictionary values
+					<i class="checkmark" ng-show="dictionariesLoaded"></i>
+					<button class="btn btn-default btn-xsx btn-snippet" data-source="#code-snippet-2">code snippet</button>
+				</h2>
+				<div class="row" ng-show="session">
+					<div class="col-md-12">
+						<button class="btn btn-primary" ng-click="getDictionaryValues()">Get dictionary values<span class="spinner"
+																																																																																																		ng-show="loaders.isGettingDictionaryValues"></span>
+						</button>
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;" ng-show="session">
+					<div class="col-md-6">
+						<p>GET: <em>{{apiURL}}system/languages</em></p>
+						<pre style="height: 300px; overflow: auto;">{{languages | json}}</pre>
+					</div>
+					<div class="col-md-6">
+						<p>GET: <em>{{apiURL}}system/workflows</em></p>
+						<pre style="height: 300px; overflow: auto;">{{workflows | json}}</pre>
+					</div>
+				</div>
+				<div class="row" style="margin-top:10px;" ng-show="session">
+					<div class="col-md-6">
+						<p>GET: <em>{{apiURL}}customers/{customerID}/persons</em></p>
+						<pre style="height: 300px; overflow: auto;">{{contactPersons | json}}</pre>
+					</div>
+					<div class="col-md-6">
+						<p>GET: <em>{{apiURL}}system/specializations</em></p>
+						<pre style="height: 300px; overflow: auto;">{{specializations | json}}</pre>
+					</div>
+				</div>
+				<hr/>
+				<h2>3. Sending quote/project
+					<i class="checkmark" ng-show="quoteResponse"></i>
+				</h2>
+
+				<div style="margin-left: 10px;">
+					<h3>3a. Uploading files
+						<button class="btn btn-default btn-xsx btn-snippet" data-source="#code-snippet-3">code snippet</button>
+					</h3>
+					<div class="row sub-row" ng-show="dictionariesLoaded">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-6">
+									<div class="form-group">
+										<label>Choose file</label>
+										<input type="file" name="file" id="file-upload"/>
+									</div>
+									<div class="form-group">
+										<label>Upload</label>
+										<button class="btn btn-primary" ng-disabled="document.querySelector('#file-upload').files.length == 0"
+																		onclick="angular.element(document.querySelector('#file-upload')).scope().uploadFile(document.querySelector('#file-upload').files)">
+											Upload file
+										</button>
+									</div>
 
 
-                                </div>
-                                <div class="col-md-6">
-                                    <h3>Uploaded files</h3>
-                                    <pre>{{uploadedFiles | json}}</pre>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr/>
-                    <h3>3b. Sending quote
-                        <button class="btn btn-default btn-xs btn-snippet"  data-source="#code-snippet-4">code snippet</button>
-                    </h3>
-                    <div class="row sub-row" ng-show="dictionariesLoaded">
-                        <div class="col-md-6">
-                            <h4>Quote JSON:</h4>
-                            <textarea class="form-control" style="width:100%; height:500px; margin-bottom: 10px;" ng-model="jsonString"></textarea>
-                            <button class="btn btn-primary" ng-click="sendQuote()">
-                                <span>Send quote/project</span>
-                                <span class="spinner" ng-show="sendingQuote"></span>
-                            </button>
-                            <div ng-show="sendingQuoteFailed === true" class="alert alert-danger login-alert">
-                                An error occurred while sending quote. Please check if API is online and if all files are not null.
-                            </div>
-                        </div>
-                        <div class="col-md-6" >
-                            <h4>Received data:</h4>
-                            <pre style="height: 500px; overflow: auto;">{{quoteResponse | json}}</pre>
-                        </div>
-                    </div>
-                </div>
+								</div>
+								<div class="col-md-6">
+									<h3>Uploaded files</h3>
+									<pre>{{uploadedFiles | json}}</pre>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr/>
+					<h3>3b. Sending quote
+						<button class="btn btn-default btn-xsx btn-snippet" data-source="#code-snippet-4">code snippet</button>
+					</h3>
+					<div class="row sub-row" ng-show="dictionariesLoaded">
+						<div class="col-md-6">
+							<h4>Quote JSON:</h4>
+							<textarea class="form-control" style="width:100%; height:500px; margin-bottom: 10px;"
+																	ng-model="jsonString"></textarea>
+							<button class="btn btn-primary" ng-click="sendQuote()">
+								<span>Send quote/project</span>
+								<span class="spinner" ng-show="sendingQuote"></span>
+							</button>
+							<div ng-show="sendingQuoteFailed === true" class="alert alert-danger login-alert">
+								An error occurred while sending quote. Please check if API is online and if all files are not null.
+							</div>
+						</div>
+						<div class="col-md-6">
+							<h4>Received data:</h4>
+							<pre style="height: 500px; overflow: auto;">{{quoteResponse | json}}</pre>
+						</div>
+					</div>
+				</div>
 
-                <h2>4. Received data</h2>
-                <div class="row" style="margin-top:10px;" ng-show="quoteResponse">
-                    <div class="col-md-6">
-                        <p>Your Project Reference Number is: <strong>{{quoteResponse.refNumber}}</strong></p>
-                        <p>You can <button class="btn btn-default" ng-click="logOut()">Logout</button> now or:</p>
-                    </div>
-                    <div class="col-md-6">
+				<h2>4. Received data</h2>
 
-                    </div>
-                </div>
-                <div class="row" style="margin-top:50px;" ng-show="quoteResponse">
-                    <div class="col-md-12">
-                        <a ng-disabled="!quoteResponse" class="btn btn-primary btn-lg" href="project-info.html" style="width:100%">Get project info and files ></a>
-                    </div>
-                </div>
+				<div class="row" style="margin-top:10px;" ng-show="quoteResponse">
+					<div class="col-md-6">
+						<p>Your Project Reference Number is: <strong>{{quoteResponse.refNumber}}</strong></p>
 
-            </div>
-        </div>
+						<p>You can
+							<button class="btn btn-default" ng-click="logOut()">Logout</button>
+							now or:
+						</p>
+					</div>
+					<div class="col-md-6">
 
-        <div class="col-md-4">
-            <pre class="hide bg-warning prettyprint" id="code-snippet-1" ng-include="'code-snippets/code-snippet-1.js'"></pre>
-            <pre class="hide bg-warning prettyprint" id="code-snippet-2" ng-include="'code-snippets/code-snippet-2.js'"></pre>
-            <pre class="hide bg-warning prettyprint" id="code-snippet-3" ng-include="'code-snippets/code-snippet-3.js'"></pre>
-            <pre class="hide bg-warning prettyprint" id="code-snippet-4" ng-include="'code-snippets/code-snippet-4.js'"></pre>
-        </div>
-    </div>
+					</div>
+				</div>
+				<div class="row" style="margin-top:50px;" ng-show="quoteResponse">
+					<div class="col-md-12">
+						<a ng-disabled="!quoteResponse"
+									class="btn btn-primary btn-lg"
+									href="project-info.html"
+									style="width:100%">Get project info and files ></a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<div class="col-md-4">
+			<pre class="hide bg-warning prettyprint" id="code-snippet-1" ng-include="'code-snippets/code-snippet-1.js'"></pre>
+			<pre class="hide bg-warning prettyprint" id="code-snippet-2" ng-include="'code-snippets/code-snippet-2.js'"></pre>
+			<pre class="hide bg-warning prettyprint" id="code-snippet-3" ng-include="'code-snippets/code-snippet-3.js'"></pre>
+			<pre class="hide bg-warning prettyprint" id="code-snippet-4" ng-include="'code-snippets/code-snippet-4.js'"></pre>
+		</div>
+	</div>
 
 </body>
 

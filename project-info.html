@@ -1,79 +1,88 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Customer Portal API Integration</title>
-    <script src="js/angular.min.js"></script>
-    <script src="js/cookies.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/jquery-1.11.0.min.js"></script>
-    <script src="js/run_prettify.js"></script>
-    <link rel="stylesheet" href="./css/xtrf-api-landing-page.css">
-    <link rel="stylesheet" href="./css/api-demo.css">
-    <script src="./js/bootstrap.min.js"></script>
+	<title>Customer Portal API Integration</title>
+	<script src="js/angular.min.js"></script>
+	<script src="js/cookies.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/jquery-1.11.0.min.js"></script>
+	<script src="js/run_prettify.js"></script>
+	<link rel="stylesheet" href="./css/xtrf-api-landing-page.css">
+	<link rel="stylesheet" href="./css/api-demo.css">
+	<script src="./js/bootstrap.min.js"></script>
 </head>
 
 <body ng-app="apiIntegration" ng-controller="mainController">
-    <div ng-include="'templates/header.html'"></div>
-    <div>
-        <div class="row main-row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div>
-                    <div ng-include="'templates/login-form.html'"></div>
-                    <h2>2. Getting project info
-                        <i class="checkmark" ng-show="projectData"></i>
-                        <button class="btn btn-default btn-xs btn-snippet"  data-source="#code-snippet-5">code snippet</button>
-                    </h2>
-                    <div class="row"  ng-show="session">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Project ID</label>
-                                <input type="text" class="form-control" placeholder="Enter Project ID" ng-model="projectID">
-                            </div>
-                            <button type="submit" class="btn btn-primary" ng-disabled="!projectID" ng-click="getProject(projectID)">Get Project</button>
-                            <div ng-show="projectNotFound === true" class="alert-danger" style="margin-top:30px; padding:5px;">
-                                There is no project with given ID.
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <p>GET: <em>{{apiURL}}projects?customerProjectNumber={{projectID}}</em></p>
-                            <pre style="height: 300px; overflow: auto; margin-bottom: 10px;">{{projectData | json}}</pre>
-                            <p>Project Internal ID: <strong>{{projectData.id}}</strong></p>
-                        </div>
-                    </div>
-                    <h2>3. Get Files
-                        <button class="btn btn-default btn-xs btn-snippet"  data-source="#code-snippet-6">code snippet</button>
-                    </h2>
-                    <div class="row" ng-show="projectData">
-                        <div class="col-md-6">
-                            <button class="btn btn-primary" ng-click="getFiles(projectData.id)">Get Files</button>
-                        </div>
-                        <div class="col-md-6">
-                            <p>GET: <em>{{apiURL}}projects/{{projectData.id}}/files</em></p>
-                            <div ng-repeat="taskFiles in filesData.tasksFiles">
-                                <h4>Task: {{taskFiles.idNumber}}</h4>
-                                <h5>Output files:</h5>
-                                <span ng-show="taskFiles.output.files == null || taskFiles.output.files.length === 0"><em>No output files</em></span>
-                                <ul>
-                                    <li ng-repeat="file in taskFiles.output.files"><a href="{{apiURL}}projects/files/{{file.id}}">{{file.name}}</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:100px;" >
-                        <div class="col-md-12">
-                            <a class="btn btn-default btn-lg" href="create-project.html" style="width:100%">< Back to creating project/quote</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <pre class="hide bg-warning prettyprint" id="code-snippet-1" ng-include="'code-snippets/code-snippet-1.js'"></pre>
-            <pre class="hide bg-warning prettyprint" id="code-snippet-5" ng-include="'code-snippets/code-snippet-5.js'"></pre>
-            <pre class="hide bg-warning prettyprint" id="code-snippet-6" ng-include="'code-snippets/code-snippet-6.js'"></pre>
-        </div>
-    </div>
+	<div ng-include="'templates/header.html'"></div>
+	<div>
+		<div class="row main-row">
+			<div class="col-md-1"></div>
+			<div class="col-md-10 main-col">
+				<div>
+					<h1>Demo - Obtain project data</h1>
+					<hr/>
+					<div ng-include="'templates/login-form.html'"></div>
+					<h2>2. Getting project info
+						<i class="checkmark" ng-show="projectData"></i>
+						<button class="btn btn-default btn-xsx btn-snippet" data-source="#code-snippet-5">code snippet</button>
+					</h2>
+					<div class="row" ng-show="session">
+						<div class="col-md-6">
+							<div class="form-group">
+								<label>Project ID</label>
+								<input type="text" class="form-control" placeholder="Enter Project ID" ng-model="projectID">
+							</div>
+							<button type="submit" class="btn btn-primary" ng-disabled="!projectID" ng-click="getProject(projectID)">Get
+								Project
+							</button>
+							<div ng-show="projectNotFound === true" class="alert-danger" style="margin-top:30px; padding:5px;">
+								There is no project with given ID.
+							</div>
+						</div>
+						<div class="col-md-6">
+							<p>GET: <em>{{apiURL}}projects?customerProjectNumber={{projectID}}</em></p>
+							<pre style="height: 300px; overflow: auto; margin-bottom: 10px;">{{projectData | json}}</pre>
+							<p>Project Internal ID: <strong>{{projectData.id}}</strong></p>
+						</div>
+					</div>
+					<hr/>
+					<h2>3. Get Files
+						<button class="btn btn-default btn-xsx btn-snippet" data-source="#code-snippet-6">code snippet</button>
+					</h2>
+					<div class="row" ng-show="projectData">
+						<div class="col-md-6">
+							<button class="btn btn-primary" ng-click="getFiles(projectData.id)">Get Files</button>
+						</div>
+						<div class="col-md-6">
+							<p>GET: <em>{{apiURL}}projects/{{projectData.id}}/files</em></p>
+
+							<div ng-repeat="taskFiles in filesData.tasksFiles">
+								<h4>Task: {{taskFiles.idNumber}}</h4>
+								<h5>Output files:</h5>
+								<span ng-show="taskFiles.output.files == null || taskFiles.output.files.length === 0"><em>No output
+									files</em></span>
+								<ul>
+									<li ng-repeat="file in taskFiles.output.files"><a href="{{apiURL}}projects/files/{{file.id}}">{{file.name}}</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="row" style="margin-top:100px;">
+						<div class="col-md-12">
+							<a class="btn btn-default btn-lg" href="create-project.html" style="width:100%">< Back to creating
+								project/quote</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-4">
+			<pre class="hide bg-warning prettyprint" id="code-snippet-1" ng-include="'code-snippets/code-snippet-1.js'"></pre>
+			<pre class="hide bg-warning prettyprint" id="code-snippet-5" ng-include="'code-snippets/code-snippet-5.js'"></pre>
+			<pre class="hide bg-warning prettyprint" id="code-snippet-6" ng-include="'code-snippets/code-snippet-6.js'"></pre>
+		</div>
+	</div>
 </body>
 
 </html>

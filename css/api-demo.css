@@ -2,8 +2,10 @@ pre {
     margin: 0;
 }
 
-.login-alert{
-    margin-top:30px; padding:5px; font-size:13px;
+.login-alert {
+    margin-top: 30px;
+    padding: 5px;
+    font-size: 13px;
 }
 
 .login-columns {
@@ -12,56 +14,72 @@ pre {
 }
 
 .checkmark:before {
-    content:"\2713\0020";
+    content: "\2713\0020";
     color: #009926;
 }
-h3{
+
+h3 {
     font-weight: bold;
 }
 
-.sub-row{
-    margin-top:10px;
+.sub-row {
+    margin-top: 10px;
     margin-bottom: 30px;
 }
 
-
 .spinner {
-    height:16px;
-    width:16px;
+    height: 16px;
+    width: 16px;
     display: inline-block;
     -webkit-animation: rotation .8s infinite linear;
     -moz-animation: rotation .8s infinite linear;
     -o-animation: rotation .8s infinite linear;
     animation: rotation .8s infinite linear;
-    border-left:2px solid rgba(255,255,255,.15);
-    border-right:2px solid rgba(255,255,255,.15);
-    border-bottom:2px solid rgba(255,255,255,.15);
-    border-top:2px solid rgba(255,255,255,.8);
-    border-radius:100%;
+    border-left: 2px solid rgba(255, 255, 255, .15);
+    border-right: 2px solid rgba(255, 255, 255, .15);
+    border-bottom: 2px solid rgba(255, 255, 255, .15);
+    border-top: 2px solid rgba(255, 255, 255, .8);
+    border-radius: 100%;
     margin-left: 6px;
     display: block;
-    float:right;
-    margin-top:2px;
+    float: right;
+    margin-top: 2px;
 }
 
 @-webkit-keyframes rotation {
-    from {-webkit-transform: rotate(0deg);}
-    to {-webkit-transform: rotate(359deg);}
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
 }
 
 @-moz-keyframes rotation {
-    from {-moz-transform: rotate(0deg);}
-    to {-moz-transform: rotate(359deg);}
+    from {
+        -moz-transform: rotate(0deg);
+    }
+    to {
+        -moz-transform: rotate(359deg);
+    }
 }
 
 @-o-keyframes rotation {
-    from {-o-transform: rotate(0deg);}
-    to {-o-transform: rotate(359deg);}
+    from {
+        -o-transform: rotate(0deg);
+    }
+    to {
+        -o-transform: rotate(359deg);
+    }
 }
 
 @keyframes rotation {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(359deg);}
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(359deg);
+    }
 }
 
 .popover {
@@ -69,12 +87,49 @@ h3{
     width: auto;
 }
 
-.main-row{
-    width:100%;
-    margin-top:80px;
+.main-row {
+    width: 100%;
+    margin-top: 80px;
     margin-bottom: 100px;
 }
 
-footer.xa-footer{
+footer.xa-footer {
     position: fixed;
+}
+
+h1 {
+    font-size: 40px;
+    line-height: 45px;
+    color: #3b3b3b;
+    font-weight: bold;
+}
+
+h2 {
+    font-size: 26px;
+    font-weight: 600;
+    color: #3b3b3b;
+    position: relative;
+}
+
+hr {
+    border-top: 1px solid #c6c5c5;
+}
+
+label {
+    font-size: 16px;
+    font-weight: normal;
+    color: #3b3b3b;
+}
+
+p {
+    font-size: 13px;
+}
+
+.main-col {
+    padding-left: 50px;
+}
+
+.checkmark {
+    position: absolute;
+    left: -35px;
 }
