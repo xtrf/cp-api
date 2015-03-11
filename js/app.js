@@ -223,6 +223,18 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
 
   }
 
+		var getWorkflow = function(demandedWorkflowName, workflows){
+			var workflowName = '';
+			if(workflows.length > 0)
+			workflowName = workflows[0].name;
+			$.each(workflows, function(index, workflow){
+				if(demandedWorkflowName == workflow.name){
+					workflowName = demandedWorkflowName;
+				}
+			})
+			return workflowName;
+		}
+
 
   var loadContactPersons = function() {
     $.ajax({
@@ -264,7 +276,7 @@ app.controller('mainController',function($scope, $http, $cookies, $q){
     var sampleJSON = {
       "name" : "Google Gloves",
       "customerProjectNumber" : uniqueProjectNumber,
-      "workflow" : { "name" : "API-test-Input2output" }, //sample workflow
+      "workflow" : { "name" : getWorkflow("API-test-Input2output", workflows) }, //sample workflow
       "specialization" : { "name" : specializations[0].name},
       "sourceLanguage" : {"name" : languages[0].name},
       "targetLanguages" : [{"name" : languages[1].name},{"name" : languages[2].name}],
