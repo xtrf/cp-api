@@ -76,11 +76,11 @@
 								<div class="col-md-6">
 									<div class="form-group">
 										<label>Choose file</label>
-										<input type="file" name="file" id="file-upload"/>
+										<input type="file" name="file" id="file-upload" ng-model="filepath"/>
 									</div>
 									<div class="form-group">
 										<label>Upload</label>
-										<button class="btn btn-primary" ng-disabled="document.querySelector('#file-upload').files.length == 0"
+										<button id="upload-button" class="btn btn-primary" disabled
 																		onclick="angular.element(document.querySelector('#file-upload')).scope().uploadFile(document.querySelector('#file-upload').files)">
 											Upload file
 										</button>
