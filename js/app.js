@@ -4,7 +4,7 @@ var app = angular.module('apiIntegration', ['ngCookies']);
 
 
 app.config(['$httpProvider', function($httpProvider) {
-	if(!$httpProvider.defaults.headers.get) {
+	if (!$httpProvider.defaults.headers.get) {
 		$httpProvider.defaults.headers.get = {};
 	}
 	//disable IE ajax request caching
@@ -74,6 +74,13 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 		delete $cookies.userPassword;
 	}
 
+	$('#file-upload').change(function() {
+		var hasNoFiles = this.files.length == 0;
+		$("#upload-button").prop('disabled', hasNoFiles);
+		/* Disable the button. */
+	});
+
+
 	$(document).on("click", ".btn-snippet", function() {
 
 		$(this).popover({
@@ -86,7 +93,7 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 			}
 		});
 
-		if($(this).siblings(".popover:visible").length == 0)
+		if ($(this).siblings(".popover:visible").length == 0)
 			$(this).popover('toggle');
 	});
 
@@ -98,9 +105,9 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 			timeout: 5000,
 			xhrFields: { withCredentials: true},
 			success: function(data) {
-				if(data.type == "Customer")
+				if (data.type == "Customer")
 					$scope.customerID = data.id;
-				else if(data.type == "CustomerPerson")
+				else if (data.type == "CustomerPerson")
 					$scope.customerID = data.parentId;
 				success(data);
 			}
@@ -133,7 +140,7 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 			},
 			error: function(XHR, textStatus, errorThrown) {
 				$scope.loaders.isSigningIn = false;
-				if(XHR.status == '403' || XHR.status == 0) {
+				if (XHR.status == '403' || XHR.status == 0) {
 					$scope.originProblem = true;
 					$scope.$apply();
 				}
@@ -246,11 +253,11 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 			return Math.floor(Math.random() * (max - min + 1)) + min;
 		}
 
-		var getRandomLetters = function(idLength)	{
+		var getRandomLetters = function(idLength) {
 			var text = "";
 			var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-			for(var i = 0; i < idLength; i++)
+			for (var i = 0; i < idLength; i++)
 				text += possible.charAt(Math.floor(Math.random() * possible.length));
 
 			return text;
@@ -346,7 +353,7 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 			xhrFields: { withCredentials: true},
 			success: function(data) {
 				console.log(data.length);
-				if(data.length === 0) {
+				if (data.length === 0) {
 					$scope.projectNotFound = true;
 					$scope.projectData = null;
 					$scope.filesData = null;
@@ -392,10 +399,10 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 
 	var getWorkflow = function(demandedWorkflowName, workflows) {
 		var workflowName = '';
-		if(workflows.length > 0)
+		if (workflows.length > 0)
 			workflowName = workflows[0].name;
 		$.each(workflows, function(index, workflow) {
-			if(demandedWorkflowName == workflow.name) {
+			if (demandedWorkflowName == workflow.name) {
 				workflowName = demandedWorkflowName;
 			}
 		})
