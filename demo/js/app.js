@@ -23,7 +23,7 @@ var showSnippet = function(snippetID) {
 }
 
 
-app.controller('mainController', function($scope, $http, $cookies, $q) {
+app.controller('mainController', function($scope, $http, $cookies, $q, $filter) {
 	$http.defaults.useXDomain = true;
 
 	var deferredSession = $q.defer();
@@ -265,6 +265,8 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 
 		var uniqueProjectNumber = 'P_' + getRandomInt(1, 10000000) + getRandomLetters(1);
 
+		var deliveryDate = new Date();
+		deliveryDate.setDate(deliveryDate.getDate() + 7);
 
 		var sampleJSON = {
 			"name": "Google Gloves",
@@ -276,7 +278,7 @@ app.controller('mainController', function($scope, $http, $cookies, $q) {
 				{"name": languages[1].name},
 				{"name": languages[2].name}
 			],
-			"deliveryDate": {formatted: "2014-10-20 00:00:00"},
+			"deliveryDate": {formatted: $filter('date')(deliveryDate, "yyyy-MM-dd hh:mm:ss")},
 			"notes": "Sample notes",
 			"autoAccept": true,
 			"person": {"id": contactPersons[0].id},
