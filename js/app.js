@@ -41,7 +41,7 @@ app.controller('mainController', function($scope, $http, $cookies, $q, $filter) 
 	$scope.quoteResponse = null;
 	$scope.dictionariesLoaded = false;
 	$scope.uploadedFiles = [];
-	$scope.apiURL = $cookies.apiURL || 'http://xtrf-trunk1.dev.xtrf.eu/xtrf-api-rest/';
+	$scope.apiURL = $cookies.apiURL || 'https://xtrf-trunk1.dev.xtrf.eu/xtrf-api-rest/';
 	$scope.userLogin = $cookies.userLogin || "C000001";
 	$scope.userPassword = $cookies.userPassword || "Test123!";
 	$scope.sendingQuote = false;
